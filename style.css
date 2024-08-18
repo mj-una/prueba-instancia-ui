@@ -1,0 +1,36 @@
+:root {
+	--medida: 94vw;
+}
+
+@media (min-aspect-ratio: 1 / 1) {
+	:root {
+		--medida: 94svh;
+	}
+}
+
+* {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: rgb(160, 100, 80);
+	height: 100svh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#contenedor {
+	width: var(--medida);
+	height: var(--medida);
+
+	position: relative;
+}
+
+.contenedor__sketch {
+	position: absolute;
+	top: 0;
+}
