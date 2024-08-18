@@ -4,15 +4,27 @@
 //
 /////////////////////////////////////////
 
+const idPrincipal = "defaultCanvas0";
+
 let x, y; // posicion circulo
+let dejavu; // font
+
+//_____________________
+
+function preload() {
+	dejavu = loadFont("./fonts/DejaVuSansMono.ttf");
+}
 
 //_____________________
 
 function setup() {
-	createCanvas(300, 300).parent("contenedor__sketch--0");
-	windowResized(); // responsive
+	let lienzo = createCanvas(300, 300)
+	lienzo.parent("contenedor__sketch--0");
+	lienzo.id(idPrincipal);
+	windowResized();
 
 	textSize(15);
+	textFont(dejavu);
 }
 
 //_____________________
@@ -20,7 +32,7 @@ function setup() {
 function draw() {
 	
 	// fondo con cambio de color
-	background(frameCount % 255, 200, 100);
+	background(255, 90, 160);
 	
 	// circulo random
 	if (frameCount % 60 == 0) {
@@ -32,7 +44,7 @@ function draw() {
 
 	// prueba de uso erase
 	erase()
-	circle(50,250,50);
+	rect(90, 190, 40, 110);
 	noErase()
 
 	// valores r,g,b,a del mouse en sketch principal
@@ -47,7 +59,7 @@ function draw() {
 function windowResized() {
 	setTimeout(() => {
 		const cont = document.getElementById("contenedor");
-		const canv = document.getElementById("defaultCanvas0");
+		const canv = document.getElementById(idPrincipal);
 		const contPx = window.getComputedStyle(cont);
 		canv.style.width = contPx.width;
 		canv.style.height = contPx.height;
@@ -64,15 +76,26 @@ function windowResized() {
 // declarar instancia secundaria
 const interfaz = (p) => {
 
-	let vis = true; // flag visibilidad
+	const idInterfaz = "defaultCanvas1";
+
+	let r, g, b;
+	let xy = [
+		50, 50,
+		250, 50,
+		250, 250,
+		50, 250
+	]
 
 	//_____________________
 
 	p.setup = () => {
-		p.createCanvas(300, 300).parent("contenedor__sketch--1");
+		let lienzo = p.createCanvas(300, 300)
+		lienzo.parent("contenedor__sketch--1");
+		lienzo.id(idInterfaz);
 		p.windowResized();
 
 		p.textSize(15);
+		p.textFont(dejavu);
 	}
 
 	//_____________________
@@ -83,21 +106,31 @@ const interfaz = (p) => {
 		p.clear();
 
 		// cuadrado parpadeando
-		let r, g, b;
-		if (p.frameCount % 120 == 0) {
-			vis = !vis
-			r = random(140, 180);
-			g = random(100, 160);
-			b = random(90, 250);
+		if (p.frameCount % 60 == 0) {
+			r = random(60, 120);
+			g = random(100, 150);
+			b = random(240, 255);
+			xy = [
+				random(50, 100),  random(50, 100),
+				random(200, 250), random(50, 100),
+				random(200, 250), random(200, 250),
+				random(50, 100),  random(200, 250)
+		 ];
+
 		}
-		if (vis) {
+		if (true) {
 			p.fill(r, g, b);
-			p.rect(100, 100, 100, 100);
+			p.beginShape();
+			p.vertex(xy[0], xy[1]);
+			p.vertex(xy[2], xy[3]);
+			p.vertex(xy[4], xy[5]);
+			p.vertex(xy[6], xy[7]);
+			p.endShape(CLOSE);
 		}
 		
 		// prueba de uso erase
 		p.erase()
-		p.circle(120, 180,20);
+		p.rect(120, 178, 20, 40);
 		p.noErase()
 
 		// valores r,g,b,a del mouse en interfaz
@@ -112,7 +145,7 @@ const interfaz = (p) => {
 	p.windowResized = () => {
 		setTimeout(() => {
 			const cont = document.getElementById("contenedor");
-			const canv = document.getElementById("defaultCanvas1");
+			const canv = document.getElementById(idInterfaz);
 			const contPx = window.getComputedStyle(cont);
 			canv.style.width = contPx.width;
   		canv.style.height = contPx.height;
@@ -120,5 +153,5 @@ const interfaz = (p) => {
 	}
 }
 
-// ejecutar instancia secundario
+// ejecutar instancia secundaria
 new p5(interfaz); 
