@@ -1,3 +1,3 @@
 ## prueba-instancia-ui
 
-link: [mj-una.github.io/prueba-instancia-ui](mj-una.github.io/prueba-instancia-ui)
+link: [https://mj-una.github.io/prueba-instancia-ui/](https://mj-una.github.io/prueba-instancia-ui/)
